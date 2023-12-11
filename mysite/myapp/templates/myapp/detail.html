@@ -1,10 +1,16 @@
+{% extends "myapp/base.html" %}
 <html>
-    <head>
 
-    </head>
-    <body>
-        <h1>
-            This is detail page for: {{item.name}}
-        </h1>
-    </body>
+<head>
+
+</head>
+
+<body>
+    {% block content %}
+    <h1>
+        This is detail page for: {{item.name}}
+    </h1>
+    {% endblock %}
+</body>
+
 </html>
