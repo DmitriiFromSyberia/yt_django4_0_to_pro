@@ -1,33 +1,35 @@
+{% extends "myapp/base.html" %}
 {% load static%}
-<html>
-
-<head>
-  <link rel="stylesheet" href="{% static 'myapp/styles.css' %}">
-</head>
-
-<body>
-  <nav>
-    <div>
-      <div>
+{% block content%}
+<nav class="bg-white shadow-lg">
+  <div class="max-w-6xl mx-auto px-4">
+    <div class="flex justify-between">
+      <div class="flex space-x-7">
         <div>
-          <div class="flex">
+          <a href="#" class="flex  items-center px-2 py-4">
             <img class="h-8 w-8" src="{% static 'myapp/images/shop.png' %}" alt="logo" />
-            <span class="text-xl"> Pro Shop </span>
-          </div>
+            <span class="text-gray-500 font-semibold text-xl"> Pro Shop </span>
+          </a><!--/.flex items-center px-2 pu-4-->
+        </div>
+        <div class="items-center flex space-x-1">
+          <a href="#" class="py-4 px-2 text-gray-500 font-semibold border-b-4 border-green-500">Home</a>
+          <a href="#" class="py-4 px-2 text-gray-500 font-semibold">About</a>
+          <a href="#" class="py-4 px-2 text-gray-500 font-semibold">Contacts</a>
         </div>
       </div>
     </div>
-  </nav>
-  <h1> This is index template </h1>
-  <h2>
-    <!-- <a href="/myapp/hello/{{item.id}}">-->
-    {% for item in items %}
-    <a href="{% url 'myapp:detail' item.id %}">
-      ID: {{item.id}} | Name: {{item.name}} | Price: {{item.price}} | Description: {{item.description}} <br>
-    </a>
-    {% endfor%}
+  </div><!--/.flex space-x-7-->
+  </div><!--/.flex justify-between-->
+  </div><!--/.max-w-6xl mx-auto px-4-->
+</nav>
+<h1> This is index template </h1>
+<h4>
+  <!-- <a href="/myapp/hello/{{item.id}}">-->
+  {% for item in items %}
+  <a href="{% url 'myapp:detail' item.id %}">
+    ID: {{item.id}} | Name: {{item.name}} | Price: {{item.price}} | Description: {{item.description}} <br>
+  </a>
+  {% endfor%}
 
-  </h2>
-</body>
-
-</html>
+</h4>
+{% endblock content%}
