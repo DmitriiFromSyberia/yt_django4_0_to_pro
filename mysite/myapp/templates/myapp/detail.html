@@ -9,7 +9,10 @@
     <p class="mt-5 text-green-500">${{item.price | intcomma}}</p> <!-- Выводит число в формате с запятой после тысяч-->
     <p class="mt-5 text-gray-500">{{item.description}}</p>
     <button class=" bg-green-500 text-white mt-[50px]">
-      <a href="{% url 'myapp:update_item' item.id %}">Update Item   </a>
+      <a href="{% url 'myapp:update_item' item.id %}">Update Item </a>
+    </button>
+    <button class=" bg-red-500 text-white mt-[50px]">
+      <a href="{% url 'myapp:delete_item' item.id %}">Delete Item </a>
     </button>
   </div>
 </div>
