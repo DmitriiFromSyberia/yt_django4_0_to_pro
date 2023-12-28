@@ -1,6 +1,8 @@
 from django.shortcuts import render, redirect
-from django.contrib.auth import login
+from django.contrib.auth import login, logout
 from .forms import NewUserForm
+
+from django.http import HttpResponse
 
 
 def register(request):
@@ -13,3 +15,18 @@ def register(request):
     form = NewUserForm()
     context = {"form": form}
     return render(request, "users/register.html", context)
+
+
+def logout_view(request):
+    logout(request)
+    return render(request, "users/logout.html")
+
+    # if request.method == "GET":
+    #     # Ваш код для обработки GET-запроса
+    #     logout(request)
+    #     # return HttpResponse("You have been logout")
+    #     return render(request, "users/logout.html")
+
+    # else:
+    #     # Ваш код для обработки других методов (например, POST)
+    #     return HttpResponse("Метод не разрешен для данного URL")
