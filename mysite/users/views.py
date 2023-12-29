@@ -3,6 +3,7 @@ from django.contrib.auth import login, logout
 from .forms import NewUserForm
 
 from django.http import HttpResponse
+from django.contrib.auth.decorators import login_required
 
 
 def register(request):
@@ -30,3 +31,8 @@ def logout_view(request):
     # else:
     #     # Ваш код для обработки других методов (например, POST)
     #     return HttpResponse("Метод не разрешен для данного URL")
+
+
+@login_required
+def profile(request):
+    return render(request, "users/profile.html")

@@ -35,11 +35,12 @@ def update_item(request, my_id):
         item.name = request.POST.get("name")
         item.price = request.POST.get("price")
         item.description = request.POST.get("description")
-        item.image = request.FILES.get('upload', item.image)
+        item.image = request.FILES.get("upload", item.image)
         item.save()
         return redirect("/myapp/")
     context = {"item": item}
     return render(request, "myapp/updateitem.html", context)
+
 
 def delete_item(request, my_id):
     item = Product.objects.get(id=my_id)
@@ -48,6 +49,7 @@ def delete_item(request, my_id):
         return redirect("/myapp/")
     context = {"item": item}
     return render(request, "myapp/deleteitem.html", context)
+
 
 # def contacts (request):
 #     return render(request,'myapp/contacts.html')
