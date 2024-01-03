@@ -4,6 +4,8 @@ from .forms import NewUserForm
 
 from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
+
 
 
 def register(request):
@@ -36,3 +38,9 @@ def logout_view(request):
 @login_required
 def profile(request):
     return render(request, "users/profile.html")
+
+def seller_profile(request, id):
+    seller=User.objects.get(id=id)
+    
+    context = {"seller": seller}
+    return render(request, "users/sellerprofile.html", context)

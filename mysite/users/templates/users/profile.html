@@ -6,17 +6,17 @@
   <div class="rounded shadow-lg">
     <div>
       {%if user.profile.image %}
-        <img src="{{user.profile.image.url}}" alt="" srcset="">
+      <img src="{{user.profile.image.url}}" alt="" srcset="">
       {% endif%}
-      
+
     </div>
     <h1 class="text-xl font-bold m-2">{{ user.username}}</h1>
   </div>
 </div>
 {%else%}
-  <form action="" method="post">
-    <h1>FORM Profile</h1>
-  </form>
+<form action="" method="post">
+  <h1>FORM Profile (Доработать самостоятельно)!!!</h1>
+</form>
 {% endif%}
 
 {% endblock content %}

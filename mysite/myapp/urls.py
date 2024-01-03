@@ -1,12 +1,22 @@
 from django.urls import path
-from myapp.views import index, indexItem, add_item, update_item, delete_item
+from myapp.views import (
+    # index,
+    # indexItem,
+    add_item,
+    update_item,
+    delete_item,
+    ProductListView,
+    ProductDetailView,
+)
 
 app_name = "myapp"
 
 urlpatterns = [
     # http://127.0.0.1:8000/myapp/hello/
-    path("", index, name="index"),
-    path("<int:my_id>/", indexItem, name="detail"),
+    # path("", index, name="index"),
+    path("", ProductListView.as_view(), name="index"),
+    # path("<int:my_id>/", indexItem, name="detail"),
+    path("<int:pk>/", ProductDetailView.as_view(), name="detail"),
     # http://127.0.0.1:8000/myapp/contacts/
     # path('contacts/', contacts)
     path("additem/", add_item, name="add_item"),
