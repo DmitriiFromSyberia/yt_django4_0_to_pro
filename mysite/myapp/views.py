@@ -3,20 +3,26 @@ from django.http import HttpResponse
 from .models import Product
 from django.contrib.auth.decorators import login_required
 from django.views.generic import ListView, DetailView
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
+from django.core.paginator import Paginator
 
 
 # Create your views here.
-# def index(request):
-#     items = Product.objects.all()
-#     # return HttpResponse(items)
-#     context = {"items": items}
-#     return render(request, "myapp/index.html", context)
+def index(request):
+    items = Product.objects.all()
+    paginator = Paginator(items, 2)
+    page_number = request.GET.get("page")
+    page_obj = paginator.get_page(page_number)
+    # return HttpResponse(items)
+    context = {"page_obj": page_obj}
+    return render(request, "myapp/index.html", context)
 
 
 class ProductListView(ListView):
     model = Product
     template_name = "myapp/index.html"
     context_object_name = "items"
+    paginate_by = 2
 
 
 # def indexItem(request, my_id):
@@ -67,6 +73,12 @@ def delete_item(request, my_id):
         return redirect("/myapp/")
     context = {"item": item}
     return render(request, "myapp/deleteitem.html", context)
+
+
+class ProductDeleteView(DeleteView):
+    model = Product
+    template_name = "myapp/deleteitem.html"
+    success_url = "/myapp/"
 
 
 # def contacts (request):
