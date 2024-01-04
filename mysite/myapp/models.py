@@ -12,3 +12,16 @@ class Product(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class OrderDetails(models.Model):
+    customer_username = models.CharField(max_length=200)
+    product = models.ForeignKey(Product, on_delete=models.PROTECT)
+    amount = models.IntegerField(null=True)
+    stripe_payment_intent = models.CharField(max_length=200, null=True)
+    has_paid = models.BooleanField(default=False)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    # def __str__(self):
+    #     return self.user.username
