@@ -40,6 +40,8 @@ INSTALLED_APPS = [
     "django.contrib.humanize",
     "myapp",
     "users",
+    "payments.apps.PaymentsConfig",
+    # "payments",
 ]
 
 MIDDLEWARE = [
@@ -57,7 +59,7 @@ ROOT_URLCONF = "mysite.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [],
+        "DIRS": ["templates"],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -118,7 +120,10 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
-STATIC_URL = "static/"
+STATIC_URL = "/static/"
+
+# for django >= 3.1
+STATICFILES_DIRS = [BASE_DIR / "static"]  # new
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
@@ -135,3 +140,7 @@ LOGIN_URL = "users:login"
 # STRIPE_PUBLIC_KEY = "pk_test_51OUcVMB6wmjhPku1x47KHYNYWEArxJJwWMEBTjbHEqCEq0UTBGtcLDW6jvY0sLW2nMTtuqkBrFbsPat9OzpvkmuS00vhIWQU5F"
 STRIPE_PUBLISHABLE_KEY = "pk_test_51OUcVMB6wmjhPku1x47KHYNYWEArxJJwWMEBTjbHEqCEq0UTBGtcLDW6jvY0sLW2nMTtuqkBrFbsPat9OzpvkmuS00vhIWQU5F"
 STRIPE_SECRET_KEY = "sk_test_51OUcVMB6wmjhPku1LUlzePbqi4N77greK2TOr0YuIeRkyU7g15ctrSdN7kYGlVmLxN2ab029dO9qqLcW8cR3Z8Z600RZxfrQro"
+
+STRIPE_ENDPOINT_SECRET = (
+    "whsec_a7a2d2e5d0ae1858e6c876b40dce17181f27f701268f039fb995e35e3eeeada4"
+)

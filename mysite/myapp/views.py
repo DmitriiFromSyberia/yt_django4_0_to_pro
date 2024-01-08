@@ -99,58 +99,62 @@ class ProductDeleteView(DeleteView):
 
 # def contacts (request):
 #     return render(request,'myapp/contacts.html')
-@csrf_exempt
-def create_checkout_session(request, id):
-    product = get_object_or_404(Product, pk=id)
-    stripe.api_key = settings.STRIPE_SECRET_KEY
+# @csrf_exempt
+# def create_checkout_session(request, id):
+#     product = get_object_or_404(Product, pk=id)
+#     stripe.api_key = settings.STRIPE_SECRET_KEY
 
-    checkout_session = stripe.checkout.Session.create(
-        # customer_email=request.user.email,
-        payment_method_types=["card"],
-        line_items=[
-            {
-                "price_data": {
-                    "currency": "usd",
-                    "product_data": {
-                        "name": product.name,
-                    },
-                    "unit_amount": int(product.price * 100),
-                },
-                "quantity": 1,
-            }
-        ],
-        mode="payment",
-        success_url=request.build_absolute_uri(reverse("myapp:success"))
-        + "?session_id+{CHECKOUT_SESSION_ID}",
-        cancel_url=request.build_absolute_uri(reverse("myapp:failed")),
-    )
-    order = OrderDetails()
-    # order.customer_username = request.user.username
-    order.product = product
-    order.stripe_payment_intent = checkout_session["payment_intent"]
-    order.amount = int(product.price * 100)
-    order.save()
-    return JsonResponse({"sessionId": checkout_session.id})
-
-
-class PaymentSuccessView(TemplateView):
-    template_name = "myapp/payment_success.html"
-
-    def get(self, request, *args, **kwargs):
-        session_id = request.GET.get("session_id")
-        if session_id is None:
-            return HttpResponseNotFound()
-
-        stripe.api_key = settings.STRIPE_SECRET_KEY
-        session = stripe.checkout.Session.retrieve(session_id)
-
-        order = get_object_or_404(
-            OrderDetails, stripe_payment_intent=session.payment_intent
-        )
-        order.has_paid = True
-        order.save()
-        return render(request, self.template_name)
+#     checkout_session = stripe.checkout.Session.create(
+#         # customer_email=request.user.email,
+#         payment_method_types=["card"],
+#         line_items=[
+#             {
+#                 "price_data": {
+#                     "currency": "usd",
+#                     "product_data": {
+#                         "name": product.name,
+#                     },
+#                     "unit_amount": int(product.price * 100),
+#                 },
+#                 "quantity": 1,
+#             }
+#         ],
+#         mode="payment",
+#         success_url=request.build_absolute_uri(reverse("myapp:success"))
+#         + "?session_id+{CHECKOUT_SESSION_ID}",
+#         cancel_url=request.build_absolute_uri(reverse("myapp:failed")),
+#     )
+#     order = OrderDetails()
+#     # order.customer_username = request.user.username
+#     order.product = product
+#     order.stripe_payment_intent = checkout_session["payment_intent"]
+#     order.amount = int(product.price * 100)
+#     order.save()
+#     return JsonResponse({"sessionId": checkout_session.id})
 
 
-class PaymentFailedView(TemplateView):
-    template_name = "myapp/payment_failed.html"
+# class PaymentSuccessView(TemplateView):
+#     template_name = "myapp/payment_success.html"
+
+#     def get(self, request, *args, **kwargs):
+#         session_id = request.GET.get("session_id")
+#         if session_id is None:
+#             return HttpResponseNotFound()
+
+#         stripe.api_key = settings.STRIPE_SECRET_KEY
+#         session = stripe.checkout.Session.retrieve(session_id)
+
+#         order = get_object_or_404(
+#             OrderDetails, stripe_payment_intent=session.payment_intent
+#         )
+#         order.has_paid = True
+#         order.save()
+#         return render(request, self.template_name)
+
+
+# class PaymentFailedView(TemplateView):
+#     template_name = "myapp/payment_failed.html"
+# """ def item_details(request, item_id):
+#     # Ваш код для обработки запроса с использованием item_id
+#     return render(request, "myapp/detail.html", {"item_id": item_id})
+#  """

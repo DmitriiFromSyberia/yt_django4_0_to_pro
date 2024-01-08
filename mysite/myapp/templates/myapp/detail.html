@@ -1,5 +1,6 @@
 {% extends "myapp/base.html" %}
 {% load humanize %}
+{% load static %}
 
 {% block content %}
 <div class="flex p-10 w-full h-200">
@@ -14,41 +15,11 @@
         Item</a></button>
     <button class="bg-red-500 text-white mt-[50px]"><a href="{% url 'myapp:delete_item' item.id %}">Delete
         Item</a></button>
-    <button class="bg-green-500 text-white mt-[50px]" id="checkout">Checkout</button>
+    <button class="bg-green-500 text-white mt-[50px]" id="submitBtn" data-product-id="{{ item.id }}">Checkout</button>
   </div>
 
 </div>
-
 <script src="https://js.stripe.com/v3/"></script>
-<script type="text/javascript">
-  // Create an instance of the Stripe object with your publishable API key
-  var stripe = Stripe('{{ stripe_publishable_key }}');
-  var checkoutButton = document.getElementById('checkout');
-
-  checkoutButton.addEventListener('click', function () {
-
-    // Create a new Checkout Session using the server-side endpoint you
-    // created in step 3.
-    fetch("{% url 'myapp:api_checkout_session' id=item.id %}", {
-      method: 'POST',
-    })
-      .then(function (response) {
-        return response.json();
-      })
-      .then(function (session) {
-        return stripe.redirectToCheckout({ sessionId: session.sessionId });
-      })
-      .then(function (result) {
-        // If `redirectToCheckout` fails due to a browser or network
-        // error, you should display the localized error message to your
-        // customer using `error.message`.
-        if (result.error) {
-          alert(result.error.message);
-        }
-      })
-      .catch(function (error) {
-        console.error('Error:', error);
-      });
-  });
-</script>
+<script src="{% static 'payments/main.js' %}"></script>
+<script defer src="https://use.fontawesome.com/releases/v6.4.0/js/all.js"></script>
 {% endblock content %}
